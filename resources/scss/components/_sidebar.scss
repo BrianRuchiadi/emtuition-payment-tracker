@@ -1,0 +1,27 @@
+.sidebar {
+  .logo img{
+    display: block;
+    width: 80px;
+    margin: 5px auto;
+    /* background-color: red; */
+  }
+
+  ul li{
+    font-size: 16px;
+    padding: 10px 15px;
+    color: white;
+    letter-spacing: 1px; 
+
+    &:hover {
+      color: #FFD000;
+      cursor: pointer;
+    }
+    i {
+      width: 15px;
+    }
+    span {
+      padding-left: 15px;
+      font-family: 'Raleway', sans-serif;
+    }
+  }
+}

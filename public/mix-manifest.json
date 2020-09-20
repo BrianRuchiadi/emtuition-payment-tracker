@@ -1,0 +1,12 @@
+{
+    "/js/pages/payment.js": "/js/pages/payment.js",
+    "/js/pages/payment-history.js": "/js/pages/payment-history.js",
+    "/js/pages/student.js": "/js/pages/student.js",
+    "/js/pages/timetable.js": "/js/pages/timetable.js",
+    "/css/vendor.css": "/css/vendor.css",
+    "/css/layouts/dashboard.css": "/css/layouts/dashboard.css",
+    "/css/pages/timetable.css": "/css/pages/timetable.css",
+    "/css/pages/student.css": "/css/pages/student.css",
+    "/css/pages/payment.css": "/css/pages/payment.css",
+    "/css/pages/payment-history.css": "/css/pages/payment-history.css"
+}

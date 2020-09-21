@@ -1,11 +1,28 @@
 let students = [];
-let tbody;
+let elTBody;
+let elModalCoverage;
+let elOpenModal;
+let elCloseModal;
 
 window.onload = (event) => {
   console.log('windows is loaded');
-  tbody = document.getElementById('tbody');
+  elTBody = document.getElementById('tbody');
+  elModalCoverage = document.getElementById('modal-coverage');
+  elOpenModal = document.getElementById('open-modal');
+  elCloseModal = document.getElementById('close-modal');
 
+  defineEventsOpenModal();
+  defineEventsCloseModal();
   fetchStudents();
+}
+
+function defineEventsCloseModal() {
+  elModalCoverage.addEventListener("click", closeModal);
+  elCloseModal.addEventListener("click", closeModal);
+}
+
+function defineEventsOpenModal() {
+  elOpenModal.addEventListener("click", openModal);
 }
 
 function fetchStudents() {
@@ -23,7 +40,7 @@ function fetchStudents() {
       students = data.students;
       if (!students || !students.length) { return; }
       
-      displayStudents(students, tbody);
+      displayStudents(students, elTBody);
     })  
     .catch(function(error) {      
       console.log('error here', error);    
@@ -71,5 +88,15 @@ function displayStudents(students, tbody) {
     cellFive.appendChild(buttonRemove);
   }
 
-  console.log('tbody', tbody);
+  // console.log('tbody', tbody);
+}
+
+function closeModal() {
+  console.log('close modal');
+  elModalCoverage.classList.add('hidden');
+}
+
+function openModal() {
+  console.log('open modal');
+  elModalCoverage.classList.remove('hidden');
 }

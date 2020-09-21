@@ -9,9 +9,7 @@
     <div class="main">
       @include('components.sidebar')
       <div class="content-wrapper">
-        <header>
-          
-        </header>
+        <header></header>
         <div class="content">
           @yield('content')
         </div>

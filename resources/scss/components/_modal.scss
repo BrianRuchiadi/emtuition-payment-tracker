@@ -1,0 +1,54 @@
+.modal-coverage {
+  position: absolute;
+  top: -10px;
+  left: 0px;
+  height: calc(100vh - 60px);
+  width: calc(100vw - 200px);
+  background-color: rgba(106, 106, 106, 0.8);
+  text-align: center;
+
+  &.hidden {
+    display: none;
+  }
+
+  .modal {
+    margin: 30px auto;
+    background-color: white;
+    box-shadow: 1px 1px 20px 0px #6a6a6a;
+    border-radius: 4px;
+    // border: 1px solid #FFD000;
+
+    &.fit {
+      display: inline-block;
+    }
+
+    .modal-header {
+      background-color: #F99D10;
+      color: white;
+      padding: 10px 15px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .modal-content {
+      padding: 20px;
+      text-align: left;
+
+      .legend {
+        font-style: italic;
+      }
+      input {
+        padding: 5px;
+        width: 250px;
+      }
+
+      button {
+        width: 250px;
+      }
+
+      .seperator {
+        margin-top: 10px;
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@
     <hr/>
 
     <div class="row action">
-      <button class="button success">
+      <button class="button success" id="open-modal">
         <i class="fas fa-plus"></i>
         Add Student
       </button>
@@ -35,67 +35,31 @@
           </tr>
         </thead>
         <tbody id="tbody">
-          {{-- <tr>
-            <td class="text-center">1</td>
-            <td>Abraham Lincoln</td>
-            <td class="text-center">1</td>
-            <td class="text-center">
-              <!-- State Read START -->
-              <button class="button edit">
-                <i class="fas fa-pencil-alt"></i>
-                Edit
-              </button>
-              <!-- State Read END -->
-              <!-- State Edit START -->
-
-              <!-- State Edit END -->
-            </td>
-            <td class="text-center">
-              <button class="button danger">Remove</button>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="text-center">2</td>
-            <td>Brandon Williams</td>
-            <td class="text-center">1</td>
-            <td class="text-center">
-              <!-- State Read START -->
-              <button class="button edit">
-                <i class="fas fa-pencil-alt"></i>
-                Edit
-              </button>
-              <!-- State Read END -->
-              <!-- State Edit START -->
-
-              <!-- State Edit END -->
-            </td>
-            <td class="text-center">
-              <button class="button danger">Remove</button>
-            </td>
-          </tr>
-
-          <tr>
-            <td class="text-center">3</td>
-            <td>Charlize Theron</td>
-            <td class="text-center">1</td>
-            <td class="text-center">
-              <!-- State Read START -->
-              <button class="button edit">
-                <i class="fas fa-pencil-alt"></i>
-                Edit
-              </button>
-              <!-- State Read END -->
-              <!-- State Edit START -->
-
-              <!-- State Edit END -->
-            </td>
-            <td class="text-center">
-              <button class="button danger">Remove</button>
-            </td>
-          </tr> --}}
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="modal-coverage" id="modal-coverage">
+    <div class="modal fit">
+      <h2 class="modal-header">Add Student</h2>
+      <div class="modal-content">
+        <h5 class="legend">Name :</h5>
+        <div>
+          <input type="text">
+        </div>
+
+        <h5 class="legend">Level :</h5>
+        <div>
+          <input type="text">
+        </div>
+        <div class="seperator">
+          <button class="success">Create</button>
+        </div>
+        <div class="seperator">
+          <button class="danger" id="close-modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 @endsection

@@ -2,6 +2,8 @@
 @import './../components/table';
 @import './../components/layout';
 @import './../components/button';
+@import './../components/form';
+@import './../components/modal';
 @import './../utilities/reset';
 
 .main {
@@ -29,6 +31,7 @@
   header {
     height: 60px;
     width: 100%;
+    // font-size: 0;
     // background-color: transparent;
     /* border-bottom: 2px solid black; */
     background-color: #EFEDEC;
@@ -37,6 +40,7 @@
   .content {
     width: 100%;
     min-height: calc(100vh - 50px);
+    position: relative;
     background: #F8FFFC;
     font-family: 'Open Sans', sans-serif;
 

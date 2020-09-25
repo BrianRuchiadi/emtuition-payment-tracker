@@ -1,28 +1,74 @@
 let students = [];
+let selectedStudent;
 let elTBody;
-let elModalCoverage;
-let elOpenModal;
-let elCloseModal;
+let filtered;
+
+let elModalCoverageAdd;
+let elModalCoverageRemove;
+let elModalCoverageEdit;
+
+let elOpenModalAdd;
+
+let elCloseModalAdd;
+let elCloseModalRemove;
+let elCloseModalEdit;
+
+let elNameRemove;
+let elLevelRemove;
+let elNameEdit;
+let elLevelEdit;
+
+let elSaveEdit;
+
+let elSearch;
 
 window.onload = (event) => {
   console.log('windows is loaded');
   elTBody = document.getElementById('tbody');
-  elModalCoverage = document.getElementById('modal-coverage');
-  elOpenModal = document.getElementById('open-modal');
-  elCloseModal = document.getElementById('close-modal');
+  elModalCoverageAdd = document.getElementById('modal-coverage-add');
+  elOpenModalAdd = document.getElementById('open-modal-add');
+  elCloseModalAdd = document.getElementById('close-modal-add');
+
+  elModalCoverageRemove = document.getElementById('modal-coverage-remove');
+  elCloseModalRemove = document.getElementById('close-modal-remove');
+
+  elModalCoverageEdit = document.getElementById('modal-coverage-edit');
+  elCloseModalEdit = document.getElementById('close-modal-edit');
+
+  elNameRemove = document.getElementById('name-remove');
+  elLevelRemove = document.getElementById('level-remove');
+
+  elNameEdit = document.getElementById('name-edit');
+  elLevelEdit = document.getElementById('level-edit');
+
+  elSearch = document.getElementById('search');
+
+  elSaveEdit = document.getElementById('save-edit');
 
   defineEventsOpenModal();
   defineEventsCloseModal();
+  defineEventsSearch();
+  defineEventsSaveEdit();
+
   fetchStudents();
 }
 
 function defineEventsCloseModal() {
-  elModalCoverage.addEventListener("click", closeModal);
-  elCloseModal.addEventListener("click", closeModal);
+  elCloseModalAdd.addEventListener("click", (ev) => closeModal('add'));
+  elCloseModalRemove.addEventListener("click", (ev) => closeModal('remove'));
+  elCloseModalEdit.addEventListener("click", (ev) => closeModal('edit'));
 }
 
 function defineEventsOpenModal() {
-  elOpenModal.addEventListener("click", openModal);
+  elOpenModalAdd.addEventListener("click", (ev) => openModal('add'));
+}
+
+function defineEventsSearch() {
+  elSearch.addEventListener("keyup", filterStudents);
+}
+
+function defineEventsSaveEdit() {
+  elSaveEdit.addEventListener("click", updateStudent);
 }
 
 function fetchStudents() {
@@ -45,6 +91,24 @@ function fetchStudents() {
     .catch(function(error) {      
       console.log('error here', error);    
     });  
+}
+
+function filterStudents() {
+  if (!students.length) { return; }
+
+  // clear table
+  clearStudents();
+  const searchString = elSearch.value;
+  filtered = students.filter(s => s.name.toLowerCase().includes(searchString));
+
+  // regenerate table
+  displayStudents(filtered, elTBody);
+}
+
+function clearStudents() {
+  while (elTBody.hasChildNodes()) {
+    elTBody.removeChild(elTBody.firstChild);
+  }
 }
 
 function displayStudents(students, tbody) {
@@ -76,6 +140,7 @@ function displayStudents(students, tbody) {
 
       buttonEdit.appendChild(iconPencil);
       buttonEdit.innerHTML = "Edit";
+      buttonEdit.addEventListener("click", (ev) => openModal('edit', { student_id: students[i].id }));
 
     cellFour.appendChild(buttonEdit);
 
@@ -84,19 +149,53 @@ function displayStudents(students, tbody) {
     let buttonRemove = document.createElement("button");
     buttonRemove.innerHTML = "Remove";
     buttonRemove.className = "button danger";
+    buttonRemove.addEventListener("click", (ev) => openModal('remove', { student_id: students[i].id }));
 
     cellFive.appendChild(buttonRemove);
   }
-
-  // console.log('tbody', tbody);
 }
 
-function closeModal() {
-  console.log('close modal');
-  elModalCoverage.classList.add('hidden');
+function closeModal(type) {
+  selectedStudent = null;
+
+  switch (type) {
+    case 'add': elModalCoverageAdd.classList.add('hidden'); break;
+    case 'remove': elModalCoverageRemove.classList.add('hidden'); break;
+    case 'edit': elModalCoverageEdit.classList.add('hidden'); break;
+  }
 }
 
-function openModal() {
-  console.log('open modal');
-  elModalCoverage.classList.remove('hidden');
+function openModal(type, obj = {}) {
+  let student;
+  switch (type) {
+    case 'add': elModalCoverageAdd.classList.remove('hidden'); break;
+    case 'remove': 
+      student = students.find(s => s.id == obj.student_id);
+
+      if (!student) { return; }
+      selectedStudent = student;
+      elModalCoverageRemove.classList.remove('hidden'); 
+
+      elNameRemove.innerHTML = student.name;
+      elLevelRemove.innerHTML = student.level;
+      break;
+    case 'edit': 
+      student = students.find(s => s.id == obj.student_id);
+
+      if (!student) { return; }
+      selectedStudent = student;
+      elModalCoverageEdit.classList.remove('hidden'); 
+
+      elNameEdit.value = student.name;
+      elLevelEdit.value = student.level;
+      break;
+  }
+}
+
+function updateStudent() {
+  selectedStudent.name = elNameEdit.value;
+  selectedStudent.level = elLevelEdit.value;
+
+  filterStudents();
+  closeModal('edit');
 }

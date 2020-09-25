@@ -94,29 +94,70 @@
 /***/ (function(module, exports) {
 
 var students = [];
+var selectedStudent;
 var elTBody;
-var elModalCoverage;
-var elOpenModal;
-var elCloseModal;
+var filtered;
+var elModalCoverageAdd;
+var elModalCoverageRemove;
+var elModalCoverageEdit;
+var elOpenModalAdd;
+var elCloseModalAdd;
+var elCloseModalRemove;
+var elCloseModalEdit;
+var elNameRemove;
+var elLevelRemove;
+var elNameEdit;
+var elLevelEdit;
+var elSaveEdit;
+var elSearch;
 
 window.onload = function (event) {
   console.log('windows is loaded');
   elTBody = document.getElementById('tbody');
-  elModalCoverage = document.getElementById('modal-coverage');
-  elOpenModal = document.getElementById('open-modal');
-  elCloseModal = document.getElementById('close-modal');
+  elModalCoverageAdd = document.getElementById('modal-coverage-add');
+  elOpenModalAdd = document.getElementById('open-modal-add');
+  elCloseModalAdd = document.getElementById('close-modal-add');
+  elModalCoverageRemove = document.getElementById('modal-coverage-remove');
+  elCloseModalRemove = document.getElementById('close-modal-remove');
+  elModalCoverageEdit = document.getElementById('modal-coverage-edit');
+  elCloseModalEdit = document.getElementById('close-modal-edit');
+  elNameRemove = document.getElementById('name-remove');
+  elLevelRemove = document.getElementById('level-remove');
+  elNameEdit = document.getElementById('name-edit');
+  elLevelEdit = document.getElementById('level-edit');
+  elSearch = document.getElementById('search');
+  elSaveEdit = document.getElementById('save-edit');
   defineEventsOpenModal();
   defineEventsCloseModal();
+  defineEventsSearch();
+  defineEventsSaveEdit();
   fetchStudents();
 };
 
 function defineEventsCloseModal() {
-  elModalCoverage.addEventListener("click", closeModal);
-  elCloseModal.addEventListener("click", closeModal);
+  elCloseModalAdd.addEventListener("click", function (ev) {
+    return closeModal('add');
+  });
+  elCloseModalRemove.addEventListener("click", function (ev) {
+    return closeModal('remove');
+  });
+  elCloseModalEdit.addEventListener("click", function (ev) {
+    return closeModal('edit');
+  });
 }
 
 function defineEventsOpenModal() {
-  elOpenModal.addEventListener("click", openModal);
+  elOpenModalAdd.addEventListener("click", function (ev) {
+    return openModal('add');
+  });
+}
+
+function defineEventsSearch() {
+  elSearch.addEventListener("keyup", filterStudents);
+}
+
+function defineEventsSaveEdit() {
+  elSaveEdit.addEventListener("click", updateStudent);
 }
 
 function fetchStudents() {
@@ -143,8 +184,29 @@ function fetchStudents() {
   });
 }
 
+function filterStudents() {
+  if (!students.length) {
+    return;
+  } // clear table
+
+
+  clearStudents();
+  var searchString = elSearch.value;
+  filtered = students.filter(function (s) {
+    return s.name.toLowerCase().includes(searchString);
+  }); // regenerate table
+
+  displayStudents(filtered, elTBody);
+}
+
+function clearStudents() {
+  while (elTBody.hasChildNodes()) {
+    elTBody.removeChild(elTBody.firstChild);
+  }
+}
+
 function displayStudents(students, tbody) {
-  for (var i = 0; i < students.length; i++) {
+  var _loop = function _loop(i) {
     var row = tbody.insertRow(i);
     row.className = "read row_".concat(i);
     var cellOne = row.insertCell(0);
@@ -164,24 +226,93 @@ function displayStudents(students, tbody) {
     iconPencil.className = "fas fa-pencil-alt";
     buttonEdit.appendChild(iconPencil);
     buttonEdit.innerHTML = "Edit";
+    buttonEdit.addEventListener("click", function (ev) {
+      return openModal('edit', {
+        student_id: students[i].id
+      });
+    });
     cellFour.appendChild(buttonEdit);
     cellFive.className = "text-center";
     var buttonRemove = document.createElement("button");
     buttonRemove.innerHTML = "Remove";
     buttonRemove.className = "button danger";
+    buttonRemove.addEventListener("click", function (ev) {
+      return openModal('remove', {
+        student_id: students[i].id
+      });
+    });
     cellFive.appendChild(buttonRemove);
-  } // console.log('tbody', tbody);
+  };
 
+  for (var i = 0; i < students.length; i++) {
+    _loop(i);
+  }
 }
 
-function closeModal() {
-  console.log('close modal');
-  elModalCoverage.classList.add('hidden');
+function closeModal(type) {
+  selectedStudent = null;
+
+  switch (type) {
+    case 'add':
+      elModalCoverageAdd.classList.add('hidden');
+      break;
+
+    case 'remove':
+      elModalCoverageRemove.classList.add('hidden');
+      break;
+
+    case 'edit':
+      elModalCoverageEdit.classList.add('hidden');
+      break;
+  }
 }
 
-function openModal() {
-  console.log('open modal');
-  elModalCoverage.classList.remove('hidden');
+function openModal(type) {
+  var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var student;
+
+  switch (type) {
+    case 'add':
+      elModalCoverageAdd.classList.remove('hidden');
+      break;
+
+    case 'remove':
+      student = students.find(function (s) {
+        return s.id == obj.student_id;
+      });
+
+      if (!student) {
+        return;
+      }
+
+      selectedStudent = student;
+      elModalCoverageRemove.classList.remove('hidden');
+      elNameRemove.innerHTML = student.name;
+      elLevelRemove.innerHTML = student.level;
+      break;
+
+    case 'edit':
+      student = students.find(function (s) {
+        return s.id == obj.student_id;
+      });
+
+      if (!student) {
+        return;
+      }
+
+      selectedStudent = student;
+      elModalCoverageEdit.classList.remove('hidden');
+      elNameEdit.value = student.name;
+      elLevelEdit.value = student.level;
+      break;
+  }
+}
+
+function updateStudent() {
+  selectedStudent.name = elNameEdit.value;
+  selectedStudent.level = elLevelEdit.value;
+  filterStudents();
+  closeModal('edit');
 }
 
 /***/ }),

@@ -13,6 +13,8 @@ let elCloseModalAdd;
 let elCloseModalRemove;
 let elCloseModalEdit;
 
+let elNameAdd;
+let elLevelAdd;
 let elNameRemove;
 let elLevelRemove;
 let elNameEdit;
@@ -34,6 +36,9 @@ window.onload = (event) => {
 
   elModalCoverageEdit = document.getElementById('modal-coverage-edit');
   elCloseModalEdit = document.getElementById('close-modal-edit');
+
+  elNameAdd = document.getElementById('name-add');
+  elLevelAdd = document.getElementById('level-add');
 
   elNameRemove = document.getElementById('name-remove');
   elLevelRemove = document.getElementById('level-remove');
@@ -91,6 +96,10 @@ function fetchStudents() {
     .catch(function(error) {      
       console.log('error here', error);    
     });  
+}
+
+function addStudent() {
+
 }
 
 function filterStudents() {

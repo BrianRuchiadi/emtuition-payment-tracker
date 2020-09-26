@@ -104,6 +104,8 @@ var elOpenModalAdd;
 var elCloseModalAdd;
 var elCloseModalRemove;
 var elCloseModalEdit;
+var elNameAdd;
+var elLevelAdd;
 var elNameRemove;
 var elLevelRemove;
 var elNameEdit;
@@ -121,6 +123,8 @@ window.onload = function (event) {
   elCloseModalRemove = document.getElementById('close-modal-remove');
   elModalCoverageEdit = document.getElementById('modal-coverage-edit');
   elCloseModalEdit = document.getElementById('close-modal-edit');
+  elNameAdd = document.getElementById('name-add');
+  elLevelAdd = document.getElementById('level-add');
   elNameRemove = document.getElementById('name-remove');
   elLevelRemove = document.getElementById('level-remove');
   elNameEdit = document.getElementById('name-edit');
@@ -183,6 +187,8 @@ function fetchStudents() {
     console.log('error here', error);
   });
 }
+
+function addStudent() {}
 
 function filterStudents() {
   if (!students.length) {

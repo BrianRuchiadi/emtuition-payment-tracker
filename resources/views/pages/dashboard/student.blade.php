@@ -46,12 +46,12 @@
       <div class="modal-content">
         <h5 class="legend">Name :</h5>
         <div>
-          <input type="text">
+          <input type="text" id="name-add">
         </div>
 
         <h5 class="legend">Level :</h5>
         <div>
-          <input type="text">
+          <input type="text" id="level-add">
         </div>
         <div class="seperator">
           <button class="success">Create</button>
@@ -99,7 +99,7 @@
           <button class="success" id="save-edit">Save</button>
         </div>
         <div class="seperator">
-          <button class="warning" id="close-modal-edit">Cancel</button>
+          <button class="danger" id="close-modal-edit">Cancel</button>
         </div>
       </div>
     </div>
